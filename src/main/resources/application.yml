@@ -1,0 +1,18 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+server:
+  port: 8081
+  servlet:
+      context-path: /api/v1   
+spring:
+  application:
+    name: user
+  datasource:
+    url: jdbc:postgresql://localhost:5432/freelanceeasy
+    username: postgres
+    password: chabrik123
+  jpa:
+    hibernate:
+      ddl-auto: update 
