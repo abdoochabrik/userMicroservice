@@ -28,7 +28,7 @@ public class KafkaListenerService {
                 emailServiceImp.sendSimpleMessage(users.get(i).getEmail(), emailServiceImp.getContent(offers, users.get(i).getUsername()));
             }
         } catch (IOException e) {
-            System.out.println("errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+            System.out.println("error");
         }
     }
 
