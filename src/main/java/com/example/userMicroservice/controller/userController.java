@@ -15,6 +15,7 @@ import com.example.userMicroservice.domain.user;
 import com.example.userMicroservice.dto.UpdateUserDto;
 import com.example.userMicroservice.dto.UserDto;
 import com.example.userMicroservice.dto.UserLoginDto;
+import com.example.userMicroservice.enums.centerOfInterest;
 import com.example.userMicroservice.service.EmailServiceImpl;
 import com.example.userMicroservice.service.userService;
 
@@ -24,9 +25,7 @@ import com.example.userMicroservice.service.userService;
 public class userController {
     
     @Autowired private userService userservice;
-    @Autowired private EmailServiceImpl emailServiceImp;
 
-    
     @PostMapping("/register")
     public ResponseEntity<user> newUser(@RequestBody UserDto userdto) {
         var user =  userservice.register(userdto);
@@ -59,13 +58,4 @@ public class userController {
         return userservice.findAllUsers();
     }
 
-    @PostMapping("/contact")
-    public String contactUser() throws Exception{
-        try {
-            emailServiceImp.sendSimpleMessage("abdoo.chbrik@gmail.com","test sending mails to clients");
-            return "ok";
-        } catch (Exception e) {
-            throw e;
-        }
-    }
 }

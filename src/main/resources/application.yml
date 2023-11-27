@@ -16,3 +16,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ["health", "info", "metrics", "prometheus", "bindings", "beans", "env", "loggers", "streamsbindings", "mappings"]      

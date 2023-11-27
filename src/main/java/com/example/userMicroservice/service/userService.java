@@ -91,7 +91,7 @@ public class userService  {
 
     public List<user> findUsersByCenterOfInterest(centerOfInterest CenterOfInterest) throws Exception{
         try {
-             return userRepo.findByCenterOfInterest(CenterOfInterest); 
+             return userRepo.findByCenterOfInterestAndActivateNotifications(CenterOfInterest,true); 
         } catch (Exception e) {
             throw new InternalServerErrorException("internal server problem");
         }
