@@ -20,10 +20,12 @@ public class KafkaListenerService {
 
     @KafkaListener(topics = "web",groupId = "groupId")
     void webListener(String data) throws Exception {
+        System.out.println("receiving web offers");
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             List<offer> offers = objectMapper.readValue(data, new TypeReference<List<offer>>() {});
             List<user> users = UserService.findUsersByCenterOfInterest(centerOfInterest.WEB);
+            System.out.println("found users" + users);
             for(int i=0;i<users.size();i++) {
                 emailServiceImp.sendSimpleMessage(users.get(i).getEmail(), emailServiceImp.getContent(offers, users.get(i).getUsername()));
             }

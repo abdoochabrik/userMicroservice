@@ -18,5 +18,6 @@ public class UserMicroserviceApplication /*implements CommandLineRunner*/  {
     public PasswordEncoder createPasswordEncoderBean() {
        return new BCryptPasswordEncoder();
 	}
+	
 
 }

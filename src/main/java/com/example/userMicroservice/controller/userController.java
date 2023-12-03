@@ -16,7 +16,6 @@ import com.example.userMicroservice.dto.UpdateUserDto;
 import com.example.userMicroservice.dto.UserDto;
 import com.example.userMicroservice.dto.UserLoginDto;
 import com.example.userMicroservice.enums.centerOfInterest;
-import com.example.userMicroservice.service.EmailServiceImpl;
 import com.example.userMicroservice.service.userService;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -58,4 +57,8 @@ public class userController {
         return userservice.findAllUsers();
     }
 
+    @GetMapping("center")
+    public java.util.List<user> get() throws Exception {
+        return userservice.findUsersByCenterOfInterest(centerOfInterest.WEB);
+    }
 }
