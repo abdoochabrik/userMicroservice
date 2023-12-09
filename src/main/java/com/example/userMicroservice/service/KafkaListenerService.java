@@ -1,6 +1,7 @@
 package com.example.userMicroservice.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 import com.example.userMicroservice.domain.offer;
@@ -14,9 +15,14 @@ import java.util.List;
 @Component
 public class KafkaListenerService {
      
-    @Autowired private EmailServiceInterface emailServiceImp;
-    @Autowired private EmailContentServiceInterface emailContentServiceImpl;
+
+  
+    @Autowired 
+    @Qualifier("EmailContentServiceImpl2")
+    private EmailContentServiceInterface emailContentServiceImpl;
+
     @Autowired private userService UserService;
+    @Autowired private EmailServiceInterface emailServiceImp;
     
 
     @KafkaListener(topics = "web",groupId = "groupId")
