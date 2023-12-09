@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @Service()
-public class EmailServiceImpl {
+public class EmailServiceImpl implements EmailServiceInterface {
     
         @Autowired private JavaMailSender emailSender;
 
@@ -21,7 +21,7 @@ public class EmailServiceImpl {
         emailSender.send(message);
        }
 
-       public String getContent(List<offer> offers, String username) {
+       /*public String getContent(List<offer> offers, String username) {
            StringBuilder result = new StringBuilder();
            result.append("Bonjour ").append(username).append("\n").append("\n");
            for ( offer offer : offers) {
@@ -34,5 +34,5 @@ public class EmailServiceImpl {
            result.append("\n").append("\n");
            result.append("équipe FreealanceEasy ").append("\n");
         return result.toString();
-    }
+    }*/
 }

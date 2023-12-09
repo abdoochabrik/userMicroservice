@@ -14,7 +14,8 @@ import java.util.List;
 @Component
 public class KafkaListenerService {
      
-    @Autowired private EmailServiceImpl emailServiceImp;
+    @Autowired private EmailServiceInterface emailServiceImp;
+    @Autowired private EmailContentServiceInterface emailContentServiceImpl;
     @Autowired private userService UserService;
     
 
@@ -27,7 +28,7 @@ public class KafkaListenerService {
             List<user> users = UserService.findUsersByCenterOfInterest(centerOfInterest.WEB);
             System.out.println("found users" + users);
             for(int i=0;i<users.size();i++) {
-                emailServiceImp.sendSimpleMessage(users.get(i).getEmail(), emailServiceImp.getContent(offers, users.get(i).getUsername()));
+                emailServiceImp.sendSimpleMessage(users.get(i).getEmail(), emailContentServiceImpl.getMailContent(offers, users.get(i).getUsername()));
             }
         } catch (IOException e) {
             System.out.println("error");
@@ -41,7 +42,7 @@ public class KafkaListenerService {
             List<offer> offers = objectMapper.readValue(data, new TypeReference<List<offer>>() {});
             List<user> users = UserService.findUsersByCenterOfInterest(centerOfInterest.DATA);
             for(int i=0;i<users.size();i++) {
-                emailServiceImp.sendSimpleMessage(users.get(i).getEmail(), emailServiceImp.getContent(offers, users.get(i).getUsername()));
+                emailServiceImp.sendSimpleMessage(users.get(i).getEmail(), emailContentServiceImpl.getMailContent(offers, users.get(i).getUsername()));
             }
         } catch (IOException e) {
             System.out.println("errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
@@ -55,7 +56,7 @@ public class KafkaListenerService {
             List<offer> offers = objectMapper.readValue(data, new TypeReference<List<offer>>() {});
             List<user> users = UserService.findUsersByCenterOfInterest(centerOfInterest.SECURITY);
             for(int i=0;i<users.size();i++) {
-                emailServiceImp.sendSimpleMessage(users.get(i).getEmail(), emailServiceImp.getContent(offers, users.get(i).getUsername()));
+                emailServiceImp.sendSimpleMessage(users.get(i).getEmail(), emailContentServiceImpl.getMailContent(offers, users.get(i).getUsername()));
             }
         } catch (IOException e) {
             System.out.println("errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
