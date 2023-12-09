@@ -1,6 +1,7 @@
 package com.example.userMicroservice.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 import com.example.userMicroservice.domain.offer;
@@ -14,8 +15,14 @@ import java.util.List;
 @Component
 public class KafkaListenerService {
      
-    @Autowired private EmailServiceImpl emailServiceImp;
+
+  
+    @Autowired 
+    @Qualifier("EmailContentServiceImpl2")
+    private EmailContentServiceInterface emailContentServiceImpl;
+
     @Autowired private userService UserService;
+    @Autowired private EmailServiceInterface emailServiceImp;
     
 
     @KafkaListener(topics = "web",groupId = "groupId")
@@ -27,7 +34,7 @@ public class KafkaListenerService {
             List<user> users = UserService.findUsersByCenterOfInterest(centerOfInterest.WEB);
             System.out.println("found users" + users);
             for(int i=0;i<users.size();i++) {
-                emailServiceImp.sendSimpleMessage(users.get(i).getEmail(), emailServiceImp.getContent(offers, users.get(i).getUsername()));
+                emailServiceImp.sendSimpleMessage(users.get(i).getEmail(), emailContentServiceImpl.getMailContent(offers, users.get(i).getUsername()));
             }
         } catch (IOException e) {
             System.out.println("error");
@@ -41,7 +48,7 @@ public class KafkaListenerService {
             List<offer> offers = objectMapper.readValue(data, new TypeReference<List<offer>>() {});
             List<user> users = UserService.findUsersByCenterOfInterest(centerOfInterest.DATA);
             for(int i=0;i<users.size();i++) {
-                emailServiceImp.sendSimpleMessage(users.get(i).getEmail(), emailServiceImp.getContent(offers, users.get(i).getUsername()));
+                emailServiceImp.sendSimpleMessage(users.get(i).getEmail(), emailContentServiceImpl.getMailContent(offers, users.get(i).getUsername()));
             }
         } catch (IOException e) {
             System.out.println("errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
@@ -55,7 +62,7 @@ public class KafkaListenerService {
             List<offer> offers = objectMapper.readValue(data, new TypeReference<List<offer>>() {});
             List<user> users = UserService.findUsersByCenterOfInterest(centerOfInterest.SECURITY);
             for(int i=0;i<users.size();i++) {
-                emailServiceImp.sendSimpleMessage(users.get(i).getEmail(), emailServiceImp.getContent(offers, users.get(i).getUsername()));
+                emailServiceImp.sendSimpleMessage(users.get(i).getEmail(), emailContentServiceImpl.getMailContent(offers, users.get(i).getUsername()));
             }
         } catch (IOException e) {
             System.out.println("errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
